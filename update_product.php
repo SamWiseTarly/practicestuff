@@ -22,6 +22,27 @@ UPDATE_PRODUCT.PHP
 
     	//connect to db
     	$db = new DB_CONNECT();
-    	
 
+    	// mysql update row with matched pid
+    	$result = mysql_query("UPDATE products SET name = '$name', price = '$price', description = '$description' WHERE pid = $pid");
+
+    	//check if row insert or not
+    	if($result){
+    		//successfully updated
+    		$resposne["success"] = 1;
+    		$response["message"] = "Product successfully updated.";
+
+    		//echo Json response
+    		echo json_encode($response);
+    	}
+    	else{}
     }
+	else{
+		//required field is missing
+		$response["success"] = 0;
+		$response["message"] = "Required field(s) is missing";
+
+		//echo Json response
+    	echo json_encode($response);
+	}
+?>
